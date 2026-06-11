@@ -1,0 +1,30 @@
+{
+  "name": "onboarding-acelera",
+  "version": "1.0.0",
+  "description": "Bem-vindo(a) ao time! Este projeto de onboarding foi criado para te ajudar a entender a stack que usamos, praticar desenvolvimento fullstack (backend e frontend) e aprender na prática com algo simples, real e divertido.",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "start:backend": "npm run start:dev --workspace=backend",
+    "start:frontend": "npm run dev --workspace=frontend",
+    "start:redis": "docker compose -f backend/docker-compose-redis.yml -p backend-redis up -d",
+    "stop:redis": "docker compose -f backend/docker-compose-redis.yml -p backend-redis down",
+    "start:db": "docker compose -f backend/docker-compose-db.yml -p backend-db up -d",
+    "stop:db": "docker compose -f backend/docker-compose-db.yml -p backend-db down",
+    "test:e2e:cov": "npm run test:e2e:cov --workspace=backend",
+    "test:unit:cov": "npm run test:unit:cov --workspace=backend",
+    "validate": "npm run validate --workspace=backend"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^6.0.2"
+  },
+  "dependencies": {
+    "axios": "^1.17.0",
+    "env-cmd": "^11.0.0",
+    "luxon": "^3.7.2"
+  }
+}
