@@ -1,15 +1,20 @@
 import { ApiProperty } from '@nestjs/swagger'
 
-import { IsNotEmpty, IsString } from '@core/validators'
+import { ToNormalizer } from '@core/transformers'
+import { IsEmail, IsNotEmpty, IsString, Matches, MinLength } from '@core/validators'
 
 export class SignupRequest {
   @IsString()
   @IsNotEmpty()
-  @ApiProperty({ example: 'senha secreta' })
+  @MinLength(6)
+  @Matches(/\d/)
+  @ApiProperty({ example: 'senha123' })
   password: string
 
   @IsString()
   @IsNotEmpty()
+  @IsEmail()
+  @ToNormalizer()
   @ApiProperty({ example: 'fulaninho@bbc.com.br' })
   email: string
 }

@@ -4,6 +4,8 @@ const VALIDATION_MESSAGE_BUILDER = {
   isNumber: () => '$property deve ser um número.',
   isOptional: () => '$property é um campo opcional.',
   isString: () => '$property deve ser uma string.',
+  minLength: (min: number) => `$property deve possuir no mínimo ${min} caracteres.`,
+  matches: () => '$property está em um formato inválido.',
 }
 
 export { VALIDATION_MESSAGE_BUILDER }

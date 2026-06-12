@@ -1,4 +1,4 @@
-import { BadRequestException, ConflictException } from '@nestjs/common'
+import { ConflictException } from '@nestjs/common'
 import { SignupUseCase } from '@src/routes/api/auth/use-cases'
 import * as bcrypt from 'bcrypt'
 import { Types } from 'mongoose'
@@ -38,31 +38,14 @@ describe('SignupUseCase', () => {
 
     await useCase.exec({ password, email })
 
+    expect(userRepository.findByEmail).toHaveBeenCalledTimes(1)
     expect(userRepository.findByEmail).toHaveBeenCalledWith(email)
     expect(userRepository.create).toHaveBeenCalledTimes(1)
+    expect(userRepository.create).toHaveBeenCalledWith(expect.any(String), email)
 
-    const [hashedPassword, savedEmail] = userRepository.create.mock.calls[0]
-    expect(savedEmail).toBe(email)
+    const [hashedPassword] = userRepository.create.mock.calls[0]
     expect(hashedPassword).not.toBe(password)
     expect(await bcrypt.compare(password, hashedPassword)).toBe(true)
-  })
-
-  it('Deve lançar erro quando email é inválido', async () => {
-    await expect(useCase.exec({ email: 'email-invalido', password })).rejects.toThrow(
-      new BadRequestException('Email inválido'),
-    )
-  })
-
-  it('Deve lançar erro quando senha não possui número', async () => {
-    await expect(useCase.exec({ email, password: 'abcdef' })).rejects.toThrow(
-      new BadRequestException('Senha fraca'),
-    )
-  })
-
-  it('Deve lançar erro quando senha possui menos de 6 caracteres', async () => {
-    await expect(useCase.exec({ email, password: 'ab1' })).rejects.toThrow(
-      new BadRequestException('Senha fraca'),
-    )
   })
 
   it('Deve lançar erro quando email já existe', async () => {
@@ -71,5 +54,9 @@ describe('SignupUseCase', () => {
     await expect(useCase.exec({ password, email })).rejects.toThrow(
       new ConflictException('Email já cadastrado'),
     )
+
+    expect(userRepository.findByEmail).toHaveBeenCalledTimes(1)
+    expect(userRepository.findByEmail).toHaveBeenCalledWith(email)
+    expect(userRepository.create).not.toHaveBeenCalled()
   })
 })

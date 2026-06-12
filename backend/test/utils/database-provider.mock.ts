@@ -29,4 +29,14 @@ const DatabaseMockProvider = {
   getModel: () => DatabaseMockModel,
 }
 
-export { DatabaseMockProvider, DatabaseMockModel, queryFunction }
+const mockCreate = <T>(onCall?: (data: T) => void) => {
+  const spy = jest.spyOn(DatabaseMockModel, 'create')
+  ;(spy as jest.Mock).mockImplementation((data: T) => {
+    onCall?.(data)
+    return queryFunction({})
+  })
+
+  return spy
+}
+
+export { DatabaseMockProvider, DatabaseMockModel, mockCreate, queryFunction }
