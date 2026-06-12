@@ -13,6 +13,10 @@ export class UserRepository {
     this.userModel = this.dbp.getModel(User.name, UserSchema)
   }
 
+  async findByEmail(email: string): Promise<User | null> {
+    return await this.userModel.findOne({ email }).exec()
+  }
+
   async create(password: string, email: string): Promise<User> {
     return await this.userModel.create({ password, email })
   }

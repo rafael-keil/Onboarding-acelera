@@ -2,7 +2,7 @@
 
 Esta é a lista de tarefas para o seu onboarding no backend. Conforme você for avançando, marque cada tarefa com um joinha ✅ para mostrar que finalizou.
 
-#### [ ] TASK 1 – Corrigir bug no cadastro de usuários duplicados e senha exposta
+#### [✅] TASK 1 – Corrigir bug no cadastro de usuários duplicados e senha exposta
 
 #### [ ] TASK 2 – Implementar login com JWT e salvar no Redis
 
