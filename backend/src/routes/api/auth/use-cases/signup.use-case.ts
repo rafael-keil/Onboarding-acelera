@@ -3,12 +3,9 @@ import * as bcrypt from 'bcrypt'
 
 import { UserRepository } from '@core/repositories'
 
-const SALT_OR_ROUNDS = 10
+import { SignupParams } from '../types'
 
-interface SignupParams {
-  email: string
-  password: string
-}
+const SALT_OR_ROUNDS = 10
 
 @Injectable()
 export class SignupUseCase {
