@@ -6,6 +6,8 @@ import {
   IsNumber as _IsNumber,
   IsOptional as _IsOptional,
   IsString as _IsString,
+  Matches as _Matches,
+  MinLength as _MinLength,
 } from 'class-validator'
 
 import { VALIDATION_MESSAGE_BUILDER } from '@core/constants'
@@ -34,8 +36,18 @@ const IsString = (validationOptions?: ValidationOptions): PropertyDecorator => {
 }
 
 const IsEmail = (validationOptions?: ValidationOptions): PropertyDecorator => {
-  const message = '$property deve estar no formato de email válido.'
+  const message = VALIDATION_MESSAGE_BUILDER.isEmail()
   return _IsEmail(undefined, { ...validationOptions, message })
 }
 
-export { IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString }
+const MinLength = (min: number, validationOptions?: ValidationOptions): PropertyDecorator => {
+  const message = VALIDATION_MESSAGE_BUILDER.minLength(min)
+  return _MinLength(min, { ...validationOptions, message })
+}
+
+const Matches = (pattern: RegExp, validationOptions?: ValidationOptions): PropertyDecorator => {
+  const message = VALIDATION_MESSAGE_BUILDER.matches()
+  return _Matches(pattern, { ...validationOptions, message })
+}
+
+export { IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString, Matches, MinLength }
