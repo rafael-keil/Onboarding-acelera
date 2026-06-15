@@ -2,10 +2,9 @@ import { Injectable } from '@nestjs/common'
 
 import { UserRepository } from '@core/repositories'
 
-interface SignupParams {
-  email: string
-  password: string
-}
+import { SignupParams } from '../types'
+
+const SALT_OR_ROUNDS = 10
 
 @Injectable()
 export class SignupUseCase {
